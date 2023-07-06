@@ -24,7 +24,6 @@
     </properties>
 
     <modules>
-        <module>orders</module>
         <module>config</module>
         <module>discoveryServer</module>
         <module>auth</module>
