@@ -1,0 +1,4 @@
+restaurant:
+  auth:
+    pub-key-url: 'http://127.0.0.1:9000/oauth2/jwks'
+    login-redirect: 'http://127.0.0.1:9000/oauth2/authorize?client_id=api-gateway&response_type=code&redirect_uri=http://127.0.0.1:8001/authorized'

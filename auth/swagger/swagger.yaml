@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: Users Service API
+  description:
+  version: 1.0.0
+tags:
+  - name: users
+    description: Everything about users
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      description: Get the list of users
+      operationId: getUsers
+      parameters:
+        - in: query
+          name: offset
+          description: The number of items to skip before starting to collect the result set
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          description: The numbers of items to return
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUser'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+    put:
+      tags:
+        - users
+      description: Add a new user
+      operationId: createUser
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUser'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/BaseResponse'
+
+components:
+  schemas:
+    AppUser:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        fistName:
+          type: string
+        lastName:
+          type: string
+        createdAt:
+          type: string
+          format: datetime
+        lastUpdated:
+          type: string
+          format: datetime
+
+    BaseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        messages:
+          type: array
+          items:
+            type: string
+
+    ServerMessage:
+      type: object
+      properties:
+        severity:
+          $ref: '#/components/schemas/Severity'
+        code:
+          type: string
+        message:
+          type: string
+
+    Severity:
+      type: string
+      enum:
+        - ERROR
+        - WARNING
+        - INFO

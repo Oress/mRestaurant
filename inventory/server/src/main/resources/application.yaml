@@ -1,0 +1,32 @@
+server:
+  port: 8002
+  application:
+    name: inventory-service
+  servlet:
+    contextPath: /inventory
+
+spring:
+  liquibase:
+    enabled: false
+    change-log: classpath:/db/changelog/master.xml
+  profiles:
+    active: local
+  application:
+    name: inventory-service
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      retry:
+        max-attempts: 10
+        max-interval: 5000
+        multiplier: 1.51
+        initial-interval: 2500
+      fail-fast: true
+      discovery:
+        enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

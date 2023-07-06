@@ -1,0 +1,40 @@
+server:
+  port: 9000
+  application:
+    name: auth-service
+  servlet:
+    contextPath: /auth
+
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/master.xml
+  profiles:
+    active: local
+  application:
+    name: auth-service
+  config:
+#    import: "optional:configserver:"
+    import: "configserver:"
+  cloud:
+    config:
+      retry:
+        max-attempts: 10
+        max-interval: 5000
+        multiplier: 1.51
+        initial-interval: 2500
+      fail-fast: true
+      discovery:
+        enabled: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: TRACE
+    org.springframework.security.oauth2: TRACE

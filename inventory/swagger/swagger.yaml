@@ -1,0 +1,125 @@
+openapi: 3.0.3
+info:
+  title: Inventory Service API
+  description:
+  version: 1.0.0
+tags:
+  - name: inventory
+    description: Everything about inventory
+  - name: menu
+    description: Everything about menu
+paths:
+  /menu:
+    get:
+      tags:
+        - menu
+      description: Get the menu list
+      operationId: getMenu
+      parameters:
+        - in: query
+          name: offset
+          description: The number of items to skip before starting to collect the result set
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          description: The numbers of items to return
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+    put:
+      tags:
+        - menu
+      description: Upsert menu items
+      operationId: updateMenuItems
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/BaseResponse'
+    delete:
+      tags:
+        - menu
+      description: Remove menu items
+      operationId: deleteMenuItems
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+
+components:
+  schemas:
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        ingredients:
+          type: array
+          items:
+            type: string
+        price:
+          type: number
+          format: float
+        image:
+          type: string
+        category:
+            type: string
+            enum:
+                - breakfast
+                - lunch
+                - shakes
+                - dinner
+
+    BaseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        messages:
+          type: array
+          items:
+            type: string
+
+    ServerMessage:
+      type: object
+      properties:
+        severity:
+          $ref: '#/components/schemas/Severity'
+        code:
+          type: string
+        message:
+          type: string
+
+    Severity:
+      type: string
+      enum:
+        - ERROR
+        - WARNING
+        - INFO

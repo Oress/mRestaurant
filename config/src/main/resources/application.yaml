@@ -1,0 +1,26 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: configserver # The default serviceId in case of Discovery First Lookup.
+  profiles:
+    # https://cloud.spring.io/spring-cloud-config/multi/multi__spring_cloud_config_server.html#_file_system_backend
+    active: native # There is a “native” profile in the Config Server that does not use Git but loads the config files from the local classpath or file system
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      server:
+        native:
+          searchLocations:
+            - classpath:/config/{application}/{profile}/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+restaurant:
+  messaging:
+    kafka:
+      uri: ${APP_KAFKA_URI:localhost:9092}

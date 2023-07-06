@@ -1,0 +1,10 @@
+restaurant:
+  gateway:
+    secret: "secret"
+    host: "127.0.0.1"
+    port: 8000
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_db
+    username: auth_user
+    password: gateway_user_pwd

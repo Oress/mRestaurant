@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <include file="oauth2/authorization-consent-schema.sql" relativeToChangelogFile="true"/>
+    <include file="oauth2/authorization-schema.sql" relativeToChangelogFile="true"/>
+    <include file="oauth2/registered_client-schema.sql" relativeToChangelogFile="true"/>
+    <include file="oauth2/users.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
