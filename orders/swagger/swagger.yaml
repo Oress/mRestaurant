@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: Inventory Service API
+  description:
+  version: 1.0.0
+tags:
+  - name: orders
+    description: Everything about orders
+paths:
+  /orders:
+    get:
+      tags:
+        - orders
+      description: Get the menu list
+      operationId: getOrders
+      parameters:
+        - in: query
+          name: userId
+          description: The user id
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: offset
+          description: The number of items to skip before starting to collect the result set
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          description: The numbers of items to return
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+    put:
+      tags:
+        - orders
+      description: create new order
+      operationId: createOrder
+      requestBody:
+        description: Menu items to upsert
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/BaseResponse'
+    post:
+      tags:
+        - orders
+      description: update order
+      operationId: updateOrder
+      requestBody:
+        description: Menu items to delete
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+        statusDetails:
+          type: string
+        createdById:
+          type: string
+          format: uuid
+        orderItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        createdAt:
+          type: string
+          format: datetime
+        updatedAt:
+          type: string
+          format: datetime
+
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        menuItemId:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+        pricePerUnit:
+          type: number
+          format: float
+        priceTotal:
+          type: number
+          format: float
+
+    BaseResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        messages:
+          type: array
+          items:
+            type: string
+
+    ServerMessage:
+      type: object
+      properties:
+        severity:
+          $ref: '#/components/schemas/Severity'
+        code:
+          type: string
+        message:
+          type: string
+
+    Severity:
+      type: string
+      enum:
+        - ERROR
+        - WARNING
+        - INFO

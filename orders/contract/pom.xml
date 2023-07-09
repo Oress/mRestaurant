@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.bte</groupId>
-        <artifactId>restaurant-auth</artifactId>
+        <artifactId>restaurant-orders</artifactId>
         <version>1.0-snapshot</version>
     </parent>
 
-    <artifactId>restaurant-auth-client</artifactId>
+    <artifactId>restaurant-orders-contract</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -18,7 +18,6 @@
         <swagger-spec-location>${project.basedir}/../swagger/swagger.yaml</swagger-spec-location>
     </properties>
 
-
     <build>
         <plugins>
             <plugin>
@@ -26,25 +25,29 @@
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>Generate customers Java OpenFeign client</id>
+                        <id>Generate inventory contract</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
+
+                        <!-- DOCS: https://openapi-generator.tech/docs/generators/spring/ -->
                         <configuration>
                             <inputSpec>${swagger-spec-location}</inputSpec>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <generatorName>spring</generatorName>
-                            <library>spring-cloud</library>
-                            <modelPackage>org.bte.auth.client.feign.model</modelPackage>
-                            <apiPackage>org.bte.auth.client.feign.api</apiPackage>
+                            <modelPackage>org.bte.restaurant.inventory.connector.model</modelPackage>
+                            <apiPackage>org.bte.restaurant.inventory.connector.api</apiPackage>
                             <modelNameSuffix>DTO</modelNameSuffix>
                             <configOptions>
                                 <documentationProvider>none</documentationProvider>
                                 <annotationLibrary>none</annotationLibrary>
                                 <openApiNullable>false</openApiNullable>
-                                <useOptional>false</useOptional>
+                                <delegatePattern>false</delegatePattern>
                                 <interfaceOnly>true</interfaceOnly>
+                                <useOptional>false</useOptional>
+                                <useResponseEntity>false</useResponseEntity>
+                                <skipDefaultInterface>true</skipDefaultInterface>
                             </configOptions>
                         </configuration>
                     </execution>
@@ -78,5 +81,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>

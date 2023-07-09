@@ -5,6 +5,6 @@ restaurant:
     port: 8000
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/auth_db
+    url: jdbc:postgresql://oregano:5432/auth_db
     username: auth_user
     password: gateway_user_pwd

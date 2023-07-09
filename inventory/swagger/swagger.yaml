@@ -8,6 +8,8 @@ tags:
     description: Everything about inventory
   - name: menu
     description: Everything about menu
+  - name: ingredients
+    description: Everything about ingredients
 paths:
   /menu:
     get:
@@ -32,19 +34,32 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
     put:
       tags:
         - menu
       description: Upsert menu items
       operationId: updateMenuItems
+      requestBody:
+        description: Menu items to upsert
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MenuItem'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
         '403':
           description: Forbidden
           content:
@@ -56,13 +71,22 @@ paths:
         - menu
       description: Remove menu items
       operationId: deleteMenuItems
+      requestBody:
+        description: Menu items to delete
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MenuItem'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MenuItem'
+                $ref: '#/components/schemas/BaseResponse'
         '403':
           description: Forbidden
           content:
@@ -70,8 +94,125 @@ paths:
               schema:
                 $ref: '#/components/schemas/BaseResponse'
 
+  /menu/getItemsByIds:
+    get:
+      tags:
+        - menu
+      description: Get the menu items by ids
+      operationId: getItemsByIds
+      parameters:
+        - in: query
+          name: menuItemsIds
+          description: The menu item ids
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+
+  /ingredients:
+    get:
+      tags:
+        - ingredients
+      description: Get the ingredients list
+      operationId: getIngredients
+      parameters:
+        - in: query
+          name: offset
+          description: The number of items to skip before starting to collect the result set
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          description: The numbers of items to return
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngredientSetup'
+    put:
+      tags:
+        - ingredients
+      description: Upsert menu items
+      operationId: updateIngredients
+      requestBody:
+        description: Ingredients to upsert
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/IngredientSetup'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngredientSetup'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+    delete:
+      tags:
+        - ingredients
+      description: Remove ingredients
+      operationId: deleteIngredients
+      requestBody:
+        description: Ingredients to delete
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/IngredientSetup'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponse'
+
+
 components:
   schemas:
+    IngredientSetup:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+
     MenuItem:
       type: object
       properties:
@@ -94,7 +235,7 @@ components:
             enum:
                 - breakfast
                 - lunch
-                - shakes
+                - drinks
                 - dinner
 
     BaseResponse:

@@ -21,6 +21,7 @@
         <openapi-plugin.version>6.3.0</openapi-plugin.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
+        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     </properties>
 
     <modules>
@@ -29,7 +30,7 @@
         <module>auth</module>
         <module>gatewayReactive</module>
         <module>inventory</module>
-        <module>inventory/contract</module>
+        <module>orders</module>
     </modules>
     <packaging>pom</packaging>
 

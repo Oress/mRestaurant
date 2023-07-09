@@ -9,13 +9,11 @@
         <version>1.0-snapshot</version>
     </parent>
 
-    <artifactId>restaurant-inventory</artifactId>
+    <artifactId>restaurant-orders</artifactId>
     <packaging>pom</packaging>
-
     <modules>
         <module>server</module>
         <module>contract</module>
-        <module>client</module>
     </modules>
 
     <properties>
