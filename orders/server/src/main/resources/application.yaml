@@ -1,16 +1,18 @@
 server:
-  port: 8002
+  port: 8003
   application:
-    name: inventory-service
+    name: orders-service
   servlet:
-    contextPath: /inventory
+    contextPath: /orders
 
 spring:
   liquibase:
-    enabled: true
+    enabled: false
     change-log: classpath:/db/changelog/master.xml
+  profiles:
+    active: local
   application:
-    name: inventory-service
+    name: orders-service
   config:
     import: "configserver:"
   cloud:

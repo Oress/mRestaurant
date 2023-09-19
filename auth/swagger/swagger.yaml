@@ -70,10 +70,10 @@ components:
           type: string
         createdAt:
           type: string
-          format: datetime
+          format: date-time
         lastUpdated:
           type: string
-          format: datetime
+          format: date-time
 
     BaseResponse:
       type: object

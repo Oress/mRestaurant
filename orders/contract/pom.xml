@@ -48,7 +48,17 @@
                                 <useOptional>false</useOptional>
                                 <useResponseEntity>false</useResponseEntity>
                                 <skipDefaultInterface>true</skipDefaultInterface>
+                                <java8>true</java8>
+                                <dateLibrary>custom</dateLibrary>
                             </configOptions>
+                            <typeMappings>
+                                <typeMapping>DateTime=Instant</typeMapping>
+                                <typeMapping>Date=Date</typeMapping>
+                            </typeMappings>
+                            <importMappings>
+                                <importMapping>Instant=java.time.Instant</importMapping>
+                                <importMapping>Date=java.util.Date</importMapping>
+                            </importMappings>
                         </configuration>
                     </execution>
                 </executions>
